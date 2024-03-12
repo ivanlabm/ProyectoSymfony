@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoriaController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+   
+   
+
+    .user{
+    display:flex;
+    justify-content: right; 
+    text-decoration: none;
+    }
+    .titulo h1{
+        margin:0px;
+    }
+     .cuerpo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+        margin:0;
+    }
+    h2{
+        background-color: #34495E ;
+        color:white;
+    }
+   
+</style>
+
+
+{% if app.user %}
+
+            <div class="mb-3 cab">
+            <div class="titulo">
+            <h1>Incidencias</h1>
+            </div>
+            <div class="user">
+            <a href="{{path('verTodosClientes') }}">Clientes</a>
+            <a href="{{path('incidencias') }}">Incidencias</a>
+            {{ app.user.userIdentifier }}
+            <form action="{{ path('app_logout') }}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+            </div>
+            </div>
+        {% endif %}
+       <div class="alert alert-success">
+        {% for message in app.flashes('success') %}
+            {{ message }}
+        {% endfor %}
+    </div>  
+    
+<div class="example-wrapper">
+    {% for incidencia in incidencias %}
+        <div> 
+        <a href="{{path('verIncidencia',{id: incidencia.id}) }}">{{ incidencia.titulo }}</a>
+        <a href="{{path('deleteIncidencia',{id: incidencia.id}) }}">(borrar)</a>
+        </div>
+    {% endfor %}
+</div>
+
+{# <a href="{{path('addIncidencia',{id: cliente.id})}}">Nueva incidencia</a> #}
+{% endblock %}

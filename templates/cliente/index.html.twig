@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticuloController!{% endblock %}
+
+{% block body %}
+<style>
+    .container { 
+    margin: 100px auto ;
+    max-width: 500px;
+    width: 60%;
+    padding:5px;
+    font: 18px/1.5 sans-serif;
+    background: white;
+    border-radius:15px; 
+    border: 3px solid black;
+    text-align:center
+    }
+
+    .cab{
+    display:flex;
+    }
+    .cab div{
+        width:50%;
+    }
+    .user{
+    display:flex;
+    justify-content: right; 
+    text-decoration: none;
+    align-items: center;
+    }
+    .titulo h1{
+        margin:0px;
+    }
+    .user img{
+        width:50px;
+        border-radius:50%;
+    }
+   
+    .user a {
+        margin-right: 10px; /* Espacio entre los enlaces */
+    }
+
+    
+</style>
+  {% if app.user %}
+
+            <div class="mb-3 cab">
+            <div class="titulo">
+            <h1>Cilentes</h1>
+            </div>
+            <div class="user">
+            <a href="{{path('verTodosClientes') }}">Clientes</a>
+            <a href="{{path('incidencias') }}">Incidencias</a>
+            <img src="/imagenes/{{app.user.foto}}">
+            {{ app.user.userIdentifier }}
+            <form action="{{ path('app_logout') }}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+            </div>
+            </div>
+        {% endif %}
+         <div class="alert alert-success">
+        {% for message in app.flashes('success') %}
+            {{ message }}
+        {% endfor %}
+    </div>
+
+<div class="container">
+
+    {% for cliente in clientes %}
+        <div> 
+        <a href="{{path('verCliente',{id: cliente.id}) }}">{{ cliente.nombre }}
+        <a href="{{path('deleteCliente',{id: cliente.id}) }}">(borrar)</a>
+        </div>
+    {% endfor %}
+     <form action="{{ path('addCliente') }}">
+                <button type="submit">Añadir</button>
+            </form>
+    
+</div>
+
+
+{% endblock %}
